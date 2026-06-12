@@ -1,4 +1,5 @@
 class FriendsController < ApplicationController
+  before_action :authenticate_user!
   before_action :set_friend, only: %i[ show edit update destroy ]
 
   # GET /friends or /friends.json
@@ -52,6 +53,7 @@ class FriendsController < ApplicationController
     @friend.destroy!
 
     respond_to do |format|
+      format.turbo_stream
       format.html { redirect_to friends_path, notice: "Friend was successfully destroyed.", status: :see_other }
       format.json { head :no_content }
     end
